@@ -1,4 +1,4 @@
 const form = document.getElementById('confirmationForm');
-const action = 'https://formspree.io/tu_correo_electronico';
+const action = 'https://formspree.io/anddy.veliz@gmail.com';
 
 form.setAttribute('action', action);
