@@ -1,65 +1,35 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación Graduación</title>
+    <title>¡Celebra conmigo!</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="invitation">
-        <h1>¡Te invito a mi graduación!</h1>
-        <p>Es un honor para mí invitarte a mi ceremonia de graduación.</p>
-        <p><strong>Fecha:</strong> 20 de Diciembre de 2024</p>
-        <p><strong>Hora:</strong> 6:00 PM</p>
-        <p><strong>Lugar:</strong> Auditorio Principal, Universidad XYZ</p>
+    <form id="confirmationForm">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Confirmar asistencia</button>
+    </form>
 
-        <h2>Confirmación de Asistencia</h2>
-        <form id="rsvpForm">
-            <label for="name">Nombre:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="guests">Número de invitados:</label>
-            <input type="number" id="guests" name="guests" min="0" max="5" required>
-
-            <button type="submit">Confirmar</button>
-        </form>
-
-        <p id="confirmationMessage"></p>
+    <div id="confirmationMessage" style="display: none;">
+        ¡Gracias por confirmar tu asistencia!
     </div>
 
     <script>
-        const form = document.getElementById('rsvpForm');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+        const form = document.getElementById('confirmationForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evita que la página se recargue
+
             const name = document.getElementById('name').value;
-            const guests = document.getElementById('guests').value;
-            
-            const data = {
-                name: name,
-                guests: guests
-            };
 
-            // Aquí debes agregar la URL de tu Google Apps Script
-            const scriptURL = 'https://script.google.com/macros/library/d/1P2O0AfI8hEJrWxL6ulGb9ri1HKyXaZifJhiTzA2bEp4ULubXrv6lQlnl/1';
+            // Aquí puedes agregar código para enviar los datos a un servidor (por ejemplo, usando fetch)
+            // o simplemente mostrar un mensaje de confirmación
+            confirmationMessage.style.display = 'block';
 
-            // Realizar la solicitud POST usando fetch
-            fetch(scriptURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(responseData => {
-                document.getElementById('confirmationMessage').textContent = 'Confirmación recibida, ¡gracias!';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('confirmationMessage').textContent = 'Hubo un problema al enviar los datos.';
-            });
+            // Limpiar el formulario
+            form.reset();
         });
     </script>
 </body>

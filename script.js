@@ -1,10 +1,4 @@
-document.getElementById('rsvpForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const guests = document.getElementById('guests').value;
+const form = document.getElementById('confirmationForm');
+const action = 'https://formspree.io/tu_correo_electronico';
 
-    document.getElementById('confirmationMessage').textContent = 
-        `Gracias ${name}, has confirmado ${guests} invitado(s). ¡Nos vemos en la graduación!`;
-    
-    document.getElementById('rsvpForm').reset();
-});
+form.setAttribute('action', action);
