@@ -5,32 +5,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form id="confirmationForm">
+    <h1>¡Te invito a celebrar mi graduación!</h1>
+    <form id="confirmationForm" method="POST" action="script.php">
         <label for="name">Nombre:</label>
         <input type="text" id="name" name="name" required>
+        <label for="guests">Número de invitados:</label>
+        <input type="number" id="guests" name="guests" min="1" required>
         <button type="submit">Confirmar asistencia</button>
     </form>
-
-    <div id="confirmationMessage" style="display: none;">
-        ¡Gracias por confirmar tu asistencia!
-    </div>
-
-    <script>
-        const form = document.getElementById('confirmationForm');
-        const confirmationMessage = document.getElementById('confirmationMessage');
-
-        form.addEventListener('submit', (event) => {
-            event.preventDefault(); // Evita que la página se recargue
-
-            const name = document.getElementById('name').value;
-
-            // Aquí puedes agregar código para enviar los datos a un servidor (por ejemplo, usando fetch)
-            // o simplemente mostrar un mensaje de confirmación
-            confirmationMessage.style.display = 'block';
-
-            // Limpiar el formulario
-            form.reset();
-        });
-    </script>
+    <div id="confirmationMessage" style="display: none;"></div>
+    <script src="script.js"></script>
 </body>
 </html>
