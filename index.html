@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Graduación</title>
+    <title>Confirmación de Asistencia</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,86 +11,79 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f4f4f4;
             margin: 0;
+            background-color: #f4f4f4;
         }
         .container {
-            background-color: #fff;
+            background: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
+            width: 100%;
         }
         h1 {
-            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-        input {
-            width: calc(100% - 22px);
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
             padding: 10px;
-            margin-top: 5px;
+            margin: 10px 0;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        button {
-            margin-top: 10px;
-            padding: 10px 20px;
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
             border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: #fff;
             cursor: pointer;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #confirmationMessage {
-            margin-top: 20px;
-            font-weight: bold;
+        input[type="submit"]:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Confirmación de Asistencia</h1>
+        <h1>Confirmar Asistencia</h1>
         <form id="confirmationForm">
             <label for="name">Nombre:</label>
             <input type="text" id="name" name="name" required>
             
-            <label for="guests">Número de invitados:</label>
-            <input type="number" id="guests" name="guests" min="1" required>
+            <label for="guests">Número de Invitados:</label>
+            <input type="number" id="guests" name="guests" required>
             
-            <button type="submit">Confirmar Asistencia</button>
+            <input type="submit" value="Confirmar">
         </form>
-        <div id="confirmationMessage"></div>
+        <p id="responseMessage"></p>
     </div>
-
     <script>
-        document.getElementById('confirmationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('confirmationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita el envío tradicional del formulario
 
-            const name = document.getElementById('name').value;
-            const guests = document.getElementById('guests').value;
+            var name = document.getElementById('name').value;
+            var guests = document.getElementById('guests').value;
 
-            fetch('https://script.google.com/macros/library/d/1P2O0AfI8hEJrWxL6ulGb9ri1HKyXaZifJhiTzA2bEp4ULubXrv6lQlnl/1', {
+            fetch('https://script.google.com/macros/s/AKfycbzwdIrfNkIQ4ZxLPbgZ5vIY68i-jqZ65qAhO9N809Q/dev', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
-                body: new URLSearchParams({
+                body: JSON.stringify({
                     name: name,
                     guests: guests
                 })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                document.getElementById('confirmationMessage').innerText = data;
+                document.getElementById('responseMessage').textContent = 'Confirmación recibida';
+                document.getElementById('confirmationForm').reset();
             })
             .catch(error => {
+                document.getElementById('responseMessage').textContent = 'Error al enviar la confirmación';
                 console.error('Error:', error);
             });
         });
